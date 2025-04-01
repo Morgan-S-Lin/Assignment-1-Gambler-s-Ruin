@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel, Field
 from typing import Optional
 import random
+import uvicorn
 
 class SimulationRequest(BaseModel):
     p: float = Field(..., gt=0, le=1, description="Probability of winning each bet")
@@ -82,3 +83,11 @@ async def run_simulation(request: SimulationRequest):
         win_probability=win_prob,
         loss_probability=loss_prob
     ) 
+
+if __name__ == "__main__":
+    
+    # Run the FastAPI application with uvicorn server
+    # Host 0.0.0.0 makes it accessible from external machines
+    # Port 8000 is the default for FastAPI
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+
